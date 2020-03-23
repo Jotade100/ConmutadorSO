@@ -1,0 +1,11 @@
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.csprojAssemblyReference.cache
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.csproj.CoreCompileInputs.cache
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.AssemblyInfoInputs.cache
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.AssemblyInfo.cs
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.deps.json
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.runtimeconfig.json
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.runtimeconfig.dev.json
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.dll
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.pdb
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.dll
+C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.pdb
