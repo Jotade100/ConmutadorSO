@@ -3,17 +3,19 @@ using System.Threading;
 
 namespace ConmutadorSO
 {
+    public delegate int[] funcion_generica(int[] valores);
     public class Pcb
     {
         public int quantum;
         public int quantumProgress;
         public int noFuncion;
         public int[] context; 
-        public Action funcion;
+        public funcion_generica funcion_utilizar;
         private volatile bool activo;
 
         // Trabajandolo como un constructor de instancias
-        public Pcb(){}
+        public Pcb(){
+        }
 
         public Pcb(int quantum, int noFuncion){
             this.quantum = quantum;

@@ -664,23 +664,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Juan Diego\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\joseg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Juan Diego\\Desktop\\UFM\\SO\\Conmutador\\ConmutadorSO\\ConmutadorSO.csproj",
+      "projectUniqueName": "D:\\CS7\\Sistemas Operativos\\ConmutadorSO\\ConmutadorSO.csproj",
       "projectName": "ConmutadorSO",
-      "projectPath": "C:\\Users\\Juan Diego\\Desktop\\UFM\\SO\\Conmutador\\ConmutadorSO\\ConmutadorSO.csproj",
-      "packagesPath": "C:\\Users\\Juan Diego\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Juan Diego\\Desktop\\UFM\\SO\\Conmutador\\ConmutadorSO\\obj\\",
+      "projectPath": "D:\\CS7\\Sistemas Operativos\\ConmutadorSO\\ConmutadorSO.csproj",
+      "packagesPath": "C:\\Users\\joseg\\.nuget\\packages\\",
+      "outputPath": "D:\\CS7\\Sistemas Operativos\\ConmutadorSO\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Juan Diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\joseg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -705,16 +701,23 @@
       "netcoreapp2.0": {
         "dependencies": {
           "Microsoft.NETCore.App": {
+            "suppressParent": "All",
             "target": "Package",
             "version": "[2.0.0, )",
             "autoReferenced": true
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
       }
     }
   }

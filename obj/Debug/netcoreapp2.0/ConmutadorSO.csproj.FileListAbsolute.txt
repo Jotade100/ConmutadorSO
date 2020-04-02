@@ -9,3 +9,15 @@ C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2
 C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.pdb
 C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.dll
 C:\Users\Juan Diego\Desktop\UFM\SO\Conmutador\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.pdb
+D:\CS7\Sistemas Operativos\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.deps.json
+D:\CS7\Sistemas Operativos\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.runtimeconfig.json
+D:\CS7\Sistemas Operativos\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.runtimeconfig.dev.json
+D:\CS7\Sistemas Operativos\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.dll
+D:\CS7\Sistemas Operativos\ConmutadorSO\bin\Debug\netcoreapp2.0\ConmutadorSO.pdb
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.csprojAssemblyReference.cache
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.csproj.CoreCompileInputs.cache
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.AssemblyInfoInputs.cache
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.AssemblyInfo.cs
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.dll
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.pdb
+D:\CS7\Sistemas Operativos\ConmutadorSO\obj\Debug\netcoreapp2.0\ConmutadorSO.genruntimeconfig.cache

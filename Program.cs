@@ -12,39 +12,48 @@ namespace ConmutadorSO
         static int b = 1;
         static int pid; //Proceso actual
         static Pcb pcbActual = null; //Instancia del PCB actual 
-        static string consolePrint = "Proceso apagado"; //String por defecto
         static List<ConsoleColor> colores = new List<ConsoleColor>(); //Colores para hacer más chilero el programa
         static List<Pcb> listaPcb = new List<Pcb>(); //Lista de PCB's listos
         static bool encendido = true; //Indica si el programa se detiene
         
 
         // Primera funcion del proyecto
-        public static void funcion1()
+        public static int[] funcion1(int[] valores)
         {
+            // obtener el contexto anterior
+            a = valores[0];
             a++;
             if(a > 2000) {
                 a = 0;
             }
             consoleInfo.outputBuffer[pid] = "El valor de a es " + a; //  Es el print console de nuestra consola emulada
+
+            // guardar el contexto antes de irme 
+            valores[0] = a;
+            return valores;
         }
         // Segunda función del proyecto
-        public static void funcion2()
+        public static int[] funcion2(int[] valores)
         {
+            b = valores[0];
+
             b = b * (b + 1);
             //b++;
             if (b > 12000){
                 b = 1;
             }
             consoleInfo.outputBuffer[pid] = "El valor de b es " + b; //Es el print console de la consola emulada
+
+            valores[0] = b;
+            return valores;
         }
 
-        public static void funcion3()
+        public static int[] funcion3(int[] valores)
         {
             c = pcbActual.quantum;
             d = pcbActual.quantum;
             consoleInfo.outputBuffer[pid] = "El valor de c es " + pcbActual.quantum + " y el valor de d es " + d; //Es el print console de la consola emulada
-            
-            
+            return valores;
         }
 
         // Instancia de ConsoleInfo [Impresión a consola]
@@ -57,22 +66,9 @@ namespace ConmutadorSO
             colores.Add(ConsoleColor.Blue); 
             colores.Add(ConsoleColor.Red); 
             colores.Add(ConsoleColor.Yellow);
-            colores.Add(ConsoleColor.Green); 
+            colores.Add(ConsoleColor.Green);
 
 
-            // PCB de prueba
-            Pcb pcb1 = new Pcb();
-            pcb1.quantum = 3;
-            pcb1.noFuncion = 1;
-            pcb1.funcion = (() => funcion1());
-            listaPcb.Add(pcb1);
-            Pcb pcb2  = new Pcb();
-            pcb2.quantum = 5;
-            pcb2.noFuncion = 2;
-            pcb2.funcion = (() => funcion2());
-            listaPcb.Add(pcb2);
-
-            
 
             // Thread de escritura a pantalla
             Thread consoleWriter = new Thread(new ThreadStart(ConsoleWriter)); //Método que actualiza la consola
@@ -99,12 +95,20 @@ namespace ConmutadorSO
 
             while (encendido)
             {   //Consiste en el hilo principal que mantiene siempre la guardia a la espera de nuevas teclas
+
                 var key = Console.ReadKey(true);
+
                 lock (consoleInfo)
                 {
                     if (key.Key == ConsoleKey.Enter) //Si oprime enter se guarda el comando
                     {
                         consoleInfo.commandReaty = true;
+                    }
+                    else if(key.Key == ConsoleKey.Backspace)
+                    {
+                        if (consoleInfo.sbRead.Length > 0) {
+                            consoleInfo.sbRead.Remove(consoleInfo.sbRead.Length - 1, 1);
+                        }
                     }
                     else
                     {
@@ -123,22 +127,26 @@ namespace ConmutadorSO
                     Pcb nuevo  = new Pcb();
                     nuevo.quantum = int.Parse(parametros[2]);
                     nuevo.noFuncion = int.Parse(parametros[1]);
+                    nuevo.context = new int[] { 1 };
                     switch (int.Parse(parametros[1]))
                     {
                         case 1:
-                            nuevo.funcion = (() => funcion1());
+                            nuevo.funcion_utilizar = new funcion_generica(funcion1);
+                            //nuevo.funcion = (() => funcion1());
                             break;
                         case 2:
-                            nuevo.funcion = (() => funcion2());
+                            nuevo.funcion_utilizar = new funcion_generica(funcion2);
+                            //nuevo.funcion = (() => funcion2());
                             break;
                         case 3:
-                            nuevo.funcion = (() => funcion3());
+                            nuevo.funcion_utilizar = new funcion_generica(funcion3);
+                            //nuevo.funcion = (() => funcion3());
                             break;
                         default:
                             consoleInfo.lastResult.AppendLine("Función inválida");
                             break;
                     }
-                    if (int.Parse(parametros[1]) > 10 & int.Parse(parametros[1]) < 1) {
+                    if (nuevo.quantum > 10 || nuevo.quantum < 1) {
                         consoleInfo.lastResult.AppendLine("Quantum muy grande o muy pequeño.");
                     } 
                     if (consoleInfo.lastResult.Length < 1) {
@@ -185,12 +193,23 @@ namespace ConmutadorSO
             // Modifica procesos y actualiza consoleInfo.outputBuffer
             try
             {
-                listaPcb[int.Parse(parametros[1])].quantum = int.Parse(parametros[2]);
+                int intento = int.Parse(parametros[2]);
+                int temp_id = int.Parse(parametros[1]);
+                if (intento > 0 && intento <= 10)
+                {
+                    listaPcb[temp_id].quantum = intento;
+                    consoleInfo.lastResult.Clear();
+                    consoleInfo.lastResult.AppendLine("Quantum de " + temp_id + " modificado con éxito a " + intento);
+                }
+                else {
+                    consoleInfo.lastResult.Clear();
+                    consoleInfo.lastResult.AppendLine("Quantum muy grande o muy pequeño.");
+                }
             }
             catch (System.Exception)
             {
                 consoleInfo.lastResult.Clear();
-                consoleInfo.lastResult.AppendLine("No se pudo eliminar"); 
+                consoleInfo.lastResult.AppendLine("No se pudo modificar por alguna razón muy específica."); 
             }
         }
 
@@ -200,16 +219,15 @@ namespace ConmutadorSO
             {
                 contador++;
                 // Este es el context Switcher por así decirlo
-
                 if(pcbActual == null & listaPcb.Count > 0){
                     pid = pid%listaPcb.Count;
                     pcbActual = listaPcb[pid];
                     pcbActual.activar();
                 } else if(listaPcb.Count == 0) {
                     pcbActual = null;
-
                 } else if(pcbActual.estaActivo()) {
-                    pcbActual.funcion();
+                    pcbActual.context = pcbActual.funcion_utilizar(pcbActual.context);
+                    //pcbActual.funcion();
                     pcbActual.quantumProgress++;
                     pcbActual.apagar();                        
                 } else {
@@ -223,22 +241,13 @@ namespace ConmutadorSO
                 lock(consoleInfo)
                 {                         
                     Console.Clear();
-
-                    if (consoleInfo.outputBuffer[4].Length < 200) //Para la barra poner 20
-                    {
-                        for (int i = listaPcb.Count; i<4; i++) {
-                            consoleInfo.outputBuffer[i] = "Proceso sin iniciar";
-                        }
-                        consoleInfo.outputBuffer[4] = "Contador global." + contador;
-                        consoleInfo.outputBuffer[5] = "PID." + pid;
+                    
+                    for (int i = listaPcb.Count; i<4; i++) {
+                        consoleInfo.outputBuffer[i] = "Proceso sin iniciar";
                     }
-                    // Servía para una barra que avanzaba
-                    /* else
-                    {
-                        //consoleInfo.outputBuffer[2] += ".";
-                        consoleInfo.outputBuffer[4] = "Contador global." + contador;
-                        consoleInfo.outputBuffer[5] = "PID." + pid;
-                    } */
+                    consoleInfo.outputBuffer[4] = "Contador global." + contador;
+                    consoleInfo.outputBuffer[5] = "PID." + pid;
+
 
                     foreach (var item in consoleInfo.outputBuffer)
                     {
@@ -266,7 +275,6 @@ namespace ConmutadorSO
                             case "quit":
                                 encendido = false;
                                 consoleInfo.lastResult.Append("¡Programa terminado exitosamente!");
-
                                 break;
                             case "add":
                                 AgregarProceso(strlist);
@@ -274,27 +282,25 @@ namespace ConmutadorSO
                             case "kill":
                                 EliminarProcesos(strlist);
                                 break;
-                            case "chn":
+                            case "ch":
                                 ModificarProcesos(strlist);
-
                                 break;
                             case "list":
                                 ListarProcesos();
                                 break;
                             case "?":
                                 consoleInfo.lastResult.AppendLine("Comandos disponibles:");
-                                consoleInfo.lastResult.AppendLine("Add #function #quantum     Agrega un nuevo proceso. Máximo 4.");
-                                consoleInfo.lastResult.AppendLine("Chn #pid #quantum     Cambia el quantum a un proceso.");
-                                consoleInfo.lastResult.AppendLine("List     Lista los procesos actuales.");
-                                consoleInfo.lastResult.AppendLine("Kill #pid     Mata un proceso según su ID.");
-                                consoleInfo.lastResult.AppendLine("Quit #pid     Salir del programa.");
+                                consoleInfo.lastResult.AppendLine("add #function #quantum     Agrega un nuevo proceso. Máximo 4.");
+                                consoleInfo.lastResult.AppendLine("ch #pid #quantum     Cambia el quantum a un proceso.");
+                                consoleInfo.lastResult.AppendLine("list     Lista los procesos actuales.");
+                                consoleInfo.lastResult.AppendLine("kill #pid     Mata un proceso según su ID.");
+                                consoleInfo.lastResult.AppendLine("quit #pid     Salir del programa.");
                                 break;
                             default:
                                 consoleInfo.lastResult.Append("Comando inválido, use ? para ver la lista de comandos");
                                 break;
                         }
                     }
-
                     Console.WriteLine(consoleInfo.lastCommand);
                     Console.WriteLine(consoleInfo.lastResult);
                     Console.WriteLine();
@@ -302,7 +308,7 @@ namespace ConmutadorSO
                     Console.WriteLine(consoleInfo.sbRead.ToString());
                     Console.WriteLine();
                 }
-                Thread.Sleep(250);
+                Thread.Sleep(150);
             }
         }
 
@@ -317,9 +323,9 @@ namespace ConmutadorSO
 
             public ConsoleInfo()
             {
-                sbRead = new StringBuilder();
+                sbRead = new StringBuilder("?");
                 outputBuffer = new List<string>();
-                commandReaty = false;
+                commandReaty = true;
                 lastResult = new StringBuilder();
             }
         }
